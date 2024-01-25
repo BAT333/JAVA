@@ -12,7 +12,7 @@ import java.time.ZoneId;
 
 public enum Writingandreading {
     WRITING(1){
-        public void whiting(String text,Path... Name) {
+        public void Whiting(String text,Path... Name) {
 
             for (Path File:Name){
                 File files = File.toFile();
@@ -23,7 +23,7 @@ public enum Writingandreading {
                     bw.newLine();
                     BasicFileAttributes basicFileAttributes = Files.readAttributes(File,BasicFileAttributes.class);
                     String modificationSchedule = String.valueOf(basicFileAttributes.lastModifiedTime().toInstant().atZone(ZoneId.systemDefault()));
-                    bw.write("modification Schedule: "+modificationSchedule);
+                    bw.write(modificationSchedule);
                     bw.flush();
 
 
@@ -38,7 +38,7 @@ public enum Writingandreading {
         }
 
     },READING(2){
-        public void reading(Path... Name) {
+        public void Reading(Path... Name) {
 
             for(Path file:Name){
 
@@ -69,6 +69,40 @@ public enum Writingandreading {
             }
 
         }
+        public String ReadingR(Path... Name) {
+            String InfoReturn="";
+
+            for(Path file:Name){
+
+                File files = file.toFile();
+                try(FileReader fr = new FileReader(files);BufferedReader br = new BufferedReader(fr)){
+                 /*
+                    char[] words = new char[10];
+                    fr.read(words);
+                    for(char word:words){
+                        System.out.print(word);
+                    }
+                    int characters;
+                    while ((characters = fr.read())!=-1){
+                        System.out.print((char) characters);
+                                         }
+
+                  */
+                    String characters;
+                    while ((characters = br.readLine())!=null){
+
+                        InfoReturn+=characters;
+                    }
+                }catch (IOException ex){
+                    ex.printStackTrace();
+
+                }
+
+            }
+            return  InfoReturn;
+
+
+        }
 
     };
 
@@ -78,8 +112,9 @@ public enum Writingandreading {
         this.values=values;
 
     }
-    public void whiting(String text,Path... Name) {System.err.println("DO NOT USE");}
-    public void reading(Path... Name) {System.err.println("DO NOT USE");}
+    public void Whiting(String text,Path... Name) {System.err.println("DO NOT USE");}
+    public void Reading(Path... Name) {System.err.println("DO NOT USE");}
+    public String ReadingR(Path... Name) {return "DO NOT USE";}
 
 
 

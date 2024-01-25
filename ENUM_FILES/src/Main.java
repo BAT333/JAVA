@@ -1,5 +1,5 @@
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.IOException;
+import java.nio.file.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -25,9 +25,24 @@ public class Main {
         FORSER fors = new FORSER("RAFAEL",1,"Dev");
         creationAll.SERIALIZAR.Serializar(fors,FilesSer);
         creationAll.DESERIALIZE.Deserializar(FilesSer);
-        String text = String.valueOf(fors.id+";"+fors.name+";"+fors.job);
+        String text = String.valueOf(fors.id+";"+fors.name+";"+fors.job+";");
 
-        Writingandreading.WRITING.whiting(text,CreateFiles);
-        Writingandreading.READING.reading(CreateFilesCopy);
+        Writingandreading.WRITING.Whiting(text,CreateFiles);
+        Writingandreading.READING.Reading(CreateFilesCopy);
+
+        System.out.println(Writingandreading.READING.ReadingR(CreateFilesCopy));
+        Path geral = Paths.get(".");
+
+        Filehandling.FILESEARCH.Search(Diretorio,geral);
+        Filehandling.FILESEARCH.Search("java",geral);
+
+        System.out.println(Filehandling.FILETREATMENT.ReadingR(";",CreateFilesCopy));
+
+
+
+
+
+
+
     }
 }
