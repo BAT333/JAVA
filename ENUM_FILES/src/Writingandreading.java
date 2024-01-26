@@ -36,6 +36,27 @@ public enum Writingandreading {
             }
 
         }
+        public void Whiting(Path Name,String... text) {
+            File file = Name.toFile();
+            try(FileWriter fw = new FileWriter(file);BufferedWriter bw = new BufferedWriter(fw)){
+                for(String Texts:text){
+                    bw.write(Texts);
+                    bw.newLine();
+                    bw.flush();
+
+
+                }
+
+
+
+            }catch (IOException ex){
+                ex.printStackTrace();
+            }
+
+
+
+        }
+
 
     },READING(2){
         public void Reading(Path... Name) {
@@ -113,6 +134,7 @@ public enum Writingandreading {
 
     }
     public void Whiting(String text,Path... Name) {System.err.println("DO NOT USE");}
+    public void Whiting(Path Name,String... text) {System.err.println("DO NOT USE");}
     public void Reading(Path... Name) {System.err.println("DO NOT USE");}
     public String ReadingR(Path... Name) {return "DO NOT USE";}
 

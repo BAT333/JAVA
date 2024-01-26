@@ -28,6 +28,7 @@ public class Main {
         String text = String.valueOf(fors.id+";"+fors.name+";"+fors.job+";");
 
         Writingandreading.WRITING.Whiting(text,CreateFiles);
+        Writingandreading.WRITING.Whiting(CreateFiles,text,text,text,text,text);
         Writingandreading.READING.Reading(CreateFilesCopy);
 
         System.out.println(Writingandreading.READING.ReadingR(CreateFilesCopy));
@@ -35,6 +36,8 @@ public class Main {
 
         Filehandling.FILESEARCH.Search(Diretorio,geral);
         Filehandling.FILESEARCH.Search("java",geral);
+        System.out.println("/////////////////////////////////////////");
+        Filehandling.FILESEARCH.Search(geral,"java,txt,zip,md");
 
         System.out.println(Filehandling.FILETREATMENT.ReadingR(";",CreateFilesCopy));
 

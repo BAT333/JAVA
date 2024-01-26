@@ -31,7 +31,9 @@ public enum Filehandling {
             }
         }
         public void Search(String Specific,Path...Directory) {
-            String regex = "glob:***/***."+Specific;
+            String regex = "glob:***/***.{";
+            regex+=Specific;
+            regex+="}";
             PathMatcher matcher = FileSystems.getDefault().getPathMatcher(regex);
 
             int cont=1;
@@ -56,6 +58,30 @@ public enum Filehandling {
             }
 
         }
+        public void Search(Path Directory,String Specific){
+            String regex = "glob:***/***.{";
+            regex+=Specific;
+            regex+="}";
+            PathMatcher matcher = FileSystems.getDefault().getPathMatcher(regex);
+            try(DirectoryStream<Path> stream = Files.newDirectoryStream(Directory)){
+                for(Path files:stream){
+                    if(matcher.matches(files)){
+                        System.out.println(files);
+
+                    }
+
+                }
+
+
+            }catch (IOException ex){
+                ex.printStackTrace();
+
+            }
+
+
+
+        }
+
 
     },FILETREATMENT(2){
         @Override
@@ -116,6 +142,7 @@ public enum Filehandling {
     }
     public void Search(Path...Directory){System.err.println("DO NOT USE");}
     public void Search(String Specific,Path...Directory){System.err.println("DO NOT USE");}
+    public void Search(Path Directory,String Specific){System.err.println("DO NOT USE");}
     public String ReadingR(String Delimiter,Path... Name) {return "DO NOT USE";}
 
 
