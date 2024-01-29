@@ -40,6 +40,7 @@ public class Main {
         Filehandling.FILESEARCH.Search(geral,"java,txt,zip,md");
 
         System.out.println(Filehandling.FILETREATMENT.ReadingR(";",CreateFilesCopy));
+        // apagar elementos e coisas repetidas
 
 
 
