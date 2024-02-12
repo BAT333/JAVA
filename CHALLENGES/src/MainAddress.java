@@ -1,5 +1,7 @@
 import CLASSES.Address;
+import CLASSES.AddressSearch;
 import CLASSES.Constant.AddressRecord;
+import CLASSES.FilesJson;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -18,19 +20,30 @@ import java.nio.file.Paths;
 public class MainAddress {
     public static void main(String[] args) {
 
-//Separa tudo em class
+
+
+         /*
 
         try {
+
+
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://viacep.com.br/ws/08460367/json/")).build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
             System.out.println(response.body());
             String json = response.body();
+
+
+
             Gson gsonAddress = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.IDENTITY).setPrettyPrinting().create();
+
             AddressRecord addressRecord = gsonAddress.fromJson(json,AddressRecord.class);
             System.out.println(addressRecord);
+
+             */
+            /*
             Address address = new Address(addressRecord);
+
 
 
             Path Directory = Paths.get("ClientFolder");
@@ -60,5 +73,24 @@ public class MainAddress {
             ex.printStackTrace();
 
         }
+
+             */
+        try {
+           String Search = AddressSearch.Search("");
+
+           Address address = new Address(AddressRecord.GsonAddress(Search));
+
+           System.out.println(address);
+            FilesJson filesJson = new FilesJson();
+           File file =  filesJson.CreateDiretorio();
+            filesJson.ToWrite(file,address);
+
+
+
+        }catch (Exception ex){
+
+            System.out.println(ex.getMessage());
+        }
+
     }
 }
