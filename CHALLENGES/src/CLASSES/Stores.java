@@ -46,7 +46,7 @@ public class Stores implements Comparable<Stores> {
 
     @Override
     public int compareTo(Stores stores) {
-        if(cost<stores.cost){
+        if(cost>stores.cost){
             return -1;
         }else if(cost == stores.cost){
             return 0;

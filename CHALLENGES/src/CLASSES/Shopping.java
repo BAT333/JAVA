@@ -42,7 +42,7 @@ public class Shopping {
     }
     public boolean Launchpurchase(Stores stores){
       if(this.limitBalance>stores.getCost()){
-          this.stores.add(stores);
+
          return true;
       }else{
           return false;

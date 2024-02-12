@@ -6,7 +6,7 @@ import java.util.*;
 public class Compra {
     public static void main(String[] args) {
         Scanner keyboard = new Scanner(System.in);
-Shopping shopping = new Shopping();
+        Shopping shopping = new Shopping();
         double limitBalance;
         while (true){
             System.out.println("WHAT IS THE PURCHASE LIMIT???");
@@ -27,7 +27,7 @@ Shopping shopping = new Shopping();
         }
 
 
-
+        List<Stores> s = new ArrayList<>();
         while (true){
             System.out.println("WHAT IS THE NAME OF THE PRODUCT???");
             String name  = keyboard.next();
@@ -35,6 +35,7 @@ Shopping shopping = new Shopping();
             double moneySpent;
 
             while (true) {
+
                 try {
                     System.out.println("HOW MUCH DOES THIS PRODUCT COST???");
 
@@ -50,27 +51,30 @@ Shopping shopping = new Shopping();
             }
 
 
+            Stores stores = new Stores(name,moneySpent);
 
-            if(shopping.getLimitBalance()<moneySpent){
+            if(shopping.Launchpurchase(stores)){
 
-                if(shopping.getLimitBalance()<=0){
-                    System.out.println("LIMIT IS OVER");
-                    break;
-                }
+                s.add(stores);
+                shopping.setStores(s);
 
-                System.out.println("NOT ENOUGH LIMIT TO PURCHASE THIS");
+
+
+
+
 
             }else{
-                Stores stores = new Stores(name,moneySpent);
-                shopping.Launchpurchase(stores);
-                shopping.setLimitBalance(shopping.getLimitBalance()-moneySpent);
 
-            }
-            System.out.println("LIMITE DE COMPRA AINDA EM:"+ shopping.getLimitBalance());
-            if(shopping.getLimitBalance()<=0){
                 break;
 
+
+
             }
+
+            shopping.setLimitBalance(shopping.getLimitBalance()-moneySpent);
+            System.out.println("LIMITE DE COMPRA AINDA EM:"+ shopping.getLimitBalance());
+
+
         }
         shopping.Purchased();
         /*
