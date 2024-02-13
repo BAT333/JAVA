@@ -1,5 +1,7 @@
 package CLASSES;
 
+import CLASSES.ExceptionsJson.ZipCodeError;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -8,9 +10,20 @@ import java.net.http.HttpResponse;
 
 public interface AddressSearch {
     public static String Search(String zipCode){
+
+
+
         String jsonSalvo = "";
         try {
-            URI uri = URI.create("https://viacep.com.br/ws/08460367/json/");
+
+            if(zipCode.length()!=8){
+
+                throw new ZipCodeError("Entering the wrong zip code");
+
+
+            }
+
+            URI uri = URI.create("https://viacep.com.br/ws/"+zipCode+"/json/");
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder().uri(uri).build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -19,7 +32,7 @@ public interface AddressSearch {
         }catch (IOException ex){
             System.out.println(ex.getMessage());
 
-        }catch (InterruptedException ex){
+        }catch (InterruptedException | ZipCodeError ex){
 
             System.out.println(ex.getMessage());
 

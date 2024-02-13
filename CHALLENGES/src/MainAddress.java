@@ -2,24 +2,13 @@ import CLASSES.Address;
 import CLASSES.AddressSearch;
 import CLASSES.Constant.AddressRecord;
 import CLASSES.FilesJson;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 
 public class MainAddress {
     public static void main(String[] args) {
-
 
 
          /*
@@ -76,7 +65,7 @@ public class MainAddress {
 
              */
         try {
-           String Search = AddressSearch.Search("");
+           String Search = AddressSearch.Search("02301100");
 
            Address address = new Address(AddressRecord.GsonAddress(Search));
 
