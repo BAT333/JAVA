@@ -1,9 +1,11 @@
 package InfosUser;
 
+import Utilities.AddressRecord;
+
 import java.util.Objects;
 
 public class Address {
-
+    private int zipCode;
     private String Neighborhood ;
     private String City ;
     private String Complement ;
@@ -28,6 +30,20 @@ public class Address {
 
 
     }
+
+    public Address(AddressRecord aR){
+        this.zipCode =Integer.valueOf(aR.cep().replace("-",""));
+        this.Complement = aR.complemento();
+        this.Neighborhood = aR.bairro();
+        this.City = aR.localidade();
+        this.State = aR.uf();
+        this.Street =aR.logradouro();
+
+
+
+
+    }
+
     public String getNeighborhood(){
         return Neighborhood;
 
@@ -76,11 +92,19 @@ public class Address {
         this.Number = Number;
     }
 
+    public int getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(int zipCode) {
+        this.zipCode = zipCode;
+    }
 
     @Override
     public String toString() {
-        return "InfosUser.Address{" +
-                "Neighborhood='" + Neighborhood + '\'' +
+        return "Address{" +
+                "zipCode=" + zipCode +
+                ", Neighborhood='" + Neighborhood + '\'' +
                 ", City='" + City + '\'' +
                 ", Complement='" + Complement + '\'' +
                 ", State='" + State + '\'' +
