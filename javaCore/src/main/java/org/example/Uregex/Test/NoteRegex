@@ -1,0 +1,33 @@
+
+String regex = "ab" -> Aqui expressao regular
+Pattern pattern = Pattern.compile(regex); -> Aqui aqui para passa expressao regular
+Matcher matcher = pattern.matcher(mensagem); -> aqui texto que vc quer abstrair a esse tal padrão da expressão regular
+
+matcher.matches()
+matcher.find()-> aqui se encontrou expressão regular vai retorna true ou false
+
+matcher.group()-> aqui vai mostra agrupado as coisas
+matcher.start -> onde vai começar
+
+
+Meta caracteres
+
+\\d -> so achar numero
+\\D -> tudo que não seja numero
+\\s -> todos espaços em branco -> \t \n \r \f
+\\S -> todos menos o em branco
+\\w -> todos digitos a-z e _
+\\W ->  tudo que não for digitos so caracteres especial
+[] -> range acha -> os caracteres especifios que vc esta procurando
+ex
+[abAcC] -> texto: Cafe è bom -> aCb-> retorno
+
+//? 0-1
+//* 0-+
+//+ 1-+
+//{n,m} de n ate m -> ex {6,10}
+//() agrupamento
+// | -> ou ex o(v|c)o -> pode ser ovo ou oco
+//$ -> final de linha
+//. -> 1.3 = 123, 133 , 1@3, 1A3 -> etc
+//^w -> tudo começa com digito ^-> começo de linha
