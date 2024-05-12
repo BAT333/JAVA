@@ -1,0 +1,85 @@
+TEM ALGUNS ERROS QUE NÃO PODE SER RESOLVIDO E VAI TER QUE PARA ARRUMAR E DEPOIS INICIAR PROGRAMA DE NOVO
+E TODOS EXTEND Throwable, E EXCPTIONS SÃO ERROS NÃO PODE SER RESOLVIDOS
+
+
+RUNTIMEEXCPTON
+checkef -> são excption checadas ou seja seu codigo nem vai compilar
+umchecke -> são não checadas que vão dar erro em tempo de compilação
+na maioria são erros feito na hora de vc programar e vc tinha que ter corrigido antes
+
+
+
+Exception tratando
+try->  tenta fazer algo
+catch-> pega exceptions e trata ou lança
+finally -> sempre vai ser excultado independete que aconteça, se deu errou não ouve algo ou não vai ser excultado
+try{
+file.createNewFile();
+}catch(IOexcption ex){
+-> aqui se não pode deixar em branco nunca
+vc tem deixar um aviso ou trata erro etc
+ex.printStackTrace();
+
+}finally{
+System.out.println("finaizou ")
+}
+
+private int(int a,int b) throes Exception, SqlException-> tem possibilidade de lançar um excprtions, quando for RUNTIMEEXCPTON não precisa dizer
+pode ter varias exceptionsseparadas por virgula
+
+if(b==0){
+thows RuntimeException("b não pode ser zero") -> aqui ja prever o erro e lança expception
+}
+@param
+@return
+@throws
+para dizer parametros,
+
+
+throws new RuntimeException("FALA QUAL PROBLEMA");
+---------------------------------------------------------------------------------------------------------------------------------------
+Exceções pt 07 - Capturando múltiplas exceções
+regra não pode colocar um tipo mais generico atras de um menos generico
+
+
+try{
+file.createNewFile();
+}catch(IOexcption | OutraExcprion | MaisUmaExcprion ex){ -> so não pode ser da mesma linha de herança
+}
+
+try{
+file.createNewFile();
+}catch(IOexcption | OutraExcprion | MaisUmaExcprion ex){ -> so não pode ser da mesma linha de herança
+}catch(Exception){-> com mesma linha de herança mais generico
+
+}
+----------------------------------------------------------------------------------------------
+try with resource
+try(Reader reader = new BuffereReader(new FileReader("text.txt))){->
+regras, so pode usar em class que extends close ou Autocloseable, e isso serve para classe sempre tem closse depois da
+exculsão fechar automaticamente, por que muitos arquivos aberto mesmo tempo pode causa, sobre carga no sistema
+ele fecha na ordem inversa, então imagina 123, vai fechar primeiro 3 depois 2 e por ultimo 1
+}catch(IOExcpetion ex){
+}
+
+----------------------------------------------------------------------------------------------------------
+exception costumisada
+cria uma class ela tem que herdar ou exception ou rutimeException
+
+ex
+public class CreateException extends Exception{
+
+    public CreateException(){
+        super("ERRO");
+    }
+    public CreateException(String message){
+        super(message);
+    }
+}
+--------------------------------------------------------------------------------------------------------
+ Exceção e regras de sobrescrita
+ pode ter ou não ter exceção
+ poder ter uma das exceção, pode declara as duas
+ ou declara como runtime para não força tratamento
+ mas nunca add mais generica do que foi declarado no metodo original
+ mas vc pode declara coisa mais especificas na que herdou
