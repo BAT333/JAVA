@@ -1,0 +1,178 @@
+Date date = new Date()
+Totalmente depresiado, trabalha em milesegundos, quase não ultilizado mais
+não poder trabalhar com internalização
+para add uma hora precisava de tudo isso
+data.setTime(data.getTime()+3600000);
+data.getTime()+3600000
+
+
+caledar-> segunda class criada para trabalhar com data
+ela classe abstrata não pode colocar nem
+assim que intancia o
+Calendar calendar = Calendar.getInstance();
+cem com um array de infos
+tem muitas coisas boas no calendar
+calendar.add(Calendar.YEAR,5);
+
+
+
+
+
+FORMATAR DATA DATE FORMATE
+Class abstrata não pode ser intanciada
+tem sete tipos que pode ser ultilizada
+date formate
+
+DateFormat[] df = new DateFormat[8];
+        df[0] = DateFormat.getDateInstance(); = 13 de mai. de 2024
+        df[1] = DateFormat.getInstance(); =13/05/2024 12:08
+        df[2] = DateFormat.getTimeInstance(); =12:08:41
+        df[3] = DateFormat.getDateTimeInstance();=13 de mai. de 2024 12:08:41
+        df[4] = DateFormat.getDateInstance(DateFormat.SHORT);=13/05/2024
+        df[5] = DateFormat.getDateInstance(DateFormat.MEDIUM);=13 de mai. de 2024
+        df[6] = DateFormat.getDateInstance(DateFormat.LONG);=13 de maio de 2024
+        df[7] = DateFormat.getDateInstance(DateFormat.FULL); =segunda-feira, 13 de maio de 2024
+
+
+
+
+ Internacionalização Datas com Locale
+ Locale locale = new Locale();
+ da para ultilizar assim para pt-Br, para dizer localidade
+ mais ja é depreciado
+ ultiliza assim que de melhor entedimento segue padrão
+     Locale locale = Locale.US;
+Vai formatar diretamente como vc quer
+DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.FULL, locale);
+System.out.println(dateFormat.format(calendar.getTime()));
+
+mostra de onde é
+System.out.println(locale1.getDisplayCountry());
+
+mostra com data formatada
+System.out.println(locale1.getDisplayCountry(locale));
+
+Internacionalização Números com Locale
+
+Locale.getDefault()-> mostra em que linha ta formatado seu computador
+ numberFormats[0]= NumberFormat.getInstance(locale); -> formato de numero de cada pais que vc quis add
+
+ numberFormats[8]= NumberFormat.getCurrencyInstance(locale);-> representação em dinheiro naquele pais
+
+ numberFormats[16]= NumberFormat.getPercentInstance(locale); -> porcetagem em reperesetação naquele pais
+
+SimpleDateFormat
+Para trabalhar com formatação de data de forma mais simpes
+SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
+forma mais simples de formatar -> alem disso vc so mostra oq precisa, cada letra representa alguma coisa
+yyyy-> represeta o ano
+so ir pesquisando
+
+
+
+LocalDate -> mostra a data
+LocalDate date = LocalDate.now();-> mostra a data atual
+LocalDate date = LocalDate.of();-> formatar data
+LocalDate date = LocalDate.MIN;
+LocalDate date = LocalDate.MIN;
+System.out.println(date.getYear());-. aqui da para pegar ano especifico etc
+mas  da para fazer monte de coisa tem monte de class ultitaria, para formatar
+so ir pesquisando
+LocalTime -> mostra time
+LocalTime date = LocalTime.now();
+mesma coisa do localDate so formatado para hora
+etc so ir pesquisando vai achando monte de coisa
+LocalDateTime -> mostra a data e time
+localDateTime mesma coisa so que ajunção dos dois, tem metodos especifico etc
+tem atual etc
+
+
+Instant
+Ela parecida com date, so que deite trabalha com milesegundos, nanosegundo
+2024-05-13T17:22:22.599667700Z -> isso mostra que ela representa o zulutime, que é horario neutro do mundo
+qualquer pessoa que pesquisar esse horario vai dar mesmo horario
+
+
+Duration
+Para trabalha quantidade de tempo, Comparar quanto tempo passou serve mais para
+datas que trabalha com milesegundo e nanos segundos
+P data
+T -> time
+H-> hora
+S-> segundos
+PT49699H0.0009983S
+ Duration duration2=  Duration.between(localTime,localTime1);-> comparando a diferença de um hora a te outra so usar
+ Durantion.between
+ ela não suporta coisa so com data
+ para isso vamos usar
+
+ Period
+ Period.between(date1,date)
+ mesma coisa que Duration so que trabalha so com Dates
+ em periodo de ano, Dias, mes
+System.out.println(Period.ofMonths(5));
+        System.out.println(Period.ofDays(5));
+        System.out.println(Period.ofYears(5));
+        System.out.println(Period.ofWeeks(5))
+tem essas mesmas coisas em
+
+ChronoUnit
+NESSE METODOS TEM COMPRARAÇÃO DE DIAS ATE OUTROS DIA, QUANTODS DIAS TEM
+QUANTAS SEMANAS SÃO EM DIAS
+MUITOS METODOS
+  long unit = ChronoUnit.DAYS.between(LocalDateTime.now(),LocalDateTime.now().plusYears(5));
+        System.out.println(unit);
+        QUANTOS DIAS DE HJ AQUI A 5 ANOS
+         = 1826
+
+TemporalAdjusters-> para fazer ajustes
+paraticamente todos metos sao static
+date.with(TemporalAdjusters.nextOrSame(DayOfWeek.MONDAY));
+System.out.println(date);-> quando VAI SER PROXIMA SEGUNDA FEIRA
+
+quando foi a ultima segunda feita
+ date = date.with(TemporalAdjusters.previous(DayOfWeek.MONDAY));
+        System.out.println(date);
+
+
+pega primeiro e ultimo dia do mes, tem muitas class ultilitarias
+  date = date.with(TemporalAdjusters.lastDayOfMonth());
+  System.out.println(date);
+primeiro dia do proximo ano etc
+
+ZoneId
+        Map<String,String> shortIds = ZoneId.SHORT_IDS;
+que oferece suporte
+System.out.println(ZoneId.systemDefault()); -> zona defaut do seu sistema
+
+ZoneId zoneId = ZoneId.of("Asia/Kolkata");-> para trocar a zona do seu computador
+
+ ZonedDateTime zonedDateTime = localDateTime.atZone(zoneId);-> para mudar zona localDateTime
+
+ Instant instant = Instant.now(); -> instant ja vem com zona automaticamente
+ System.out.println(instant);
+
+ ZonedDateTime zonedDateTime1 = instant.atZone(zoneId);-< ja pode add zone vai mostra hora da zona
+ System.out.println(zonedDateTime1);
+
+ quando vc não sabe com certeza qual horario de certa zona da para setar com zone of set
+  ZoneOffset offset = ZoneOffset.of("-04:00");
+  System.out.println(localDateTime.atOffset(offset));
+
+
+
+
+
+  DateTimeFormatter
+  maneiras de formatar novas datas
+  e ja tem muitos predefinidos e formas de usar
+    LocalDateTime localDateTime = LocalDateTime.now();
+          System.out.println(localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE));
+          DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy");
+          System.out.println(localDateTime.format(dateTimeFormatter));
+          DateTimeFormatter.ofPattern("yyyy"); -> aqui vc mostra o padrão que vc quer
+          e depois passa no LocalDate e format assim
+          pode usar Locale -> para que pais que vc quer tbm
+
+ResourceBundle-> mensagem de outros pais
+
