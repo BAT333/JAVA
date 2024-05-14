@@ -1,0 +1,172 @@
+FILE PARA CRIAR
+
+File file = new File("file.txt");-> ASSIM ELE VAI CRIA NA PASTA NA PARTE MAIS GENERICA
+File file = new File("C:\Users\rafae\IdeaProjects\JAVA\javaCore\src\main\java\VIo\test\file.txt");
+deste jeito para criar em lugar especifico mostrando caminho absoluto
+
+file.createNewFile();-> aqui cria, fala que pode criar file detro de try catch
+System.out.println(file.getPath()); - > aqui fala nome do file
+System.out.println(file.getAbsolutePath());-> fala caminho absoluto dele
+System.out.println(file.isDirectory()); -> se é diretorio
+System.out.println(file.isFile());-> se é um file
+System.out.println(file.isHidden());-> se pode escrever
+System.out.println(Instant.ofEpochMilli(file.lastModified()).atZone(ZoneId.systemDefault()));
+-> data de modificação
+ if(file.exists()){-> se exist
+    file.delete();-> delete
+}
+
+
+
+PARA ESCREVER NO ARQUIVO FORMA SIMPLES
+FileWriter writer = new FileWriter(file,true);-> aqui class de escrever no file
+writer.write("OIE AQUI RAFAEL");-> com write se escreve oq quer
+writer.flush();-> aqui meio que fala para tudo que tiver escrito empurra para file
+por que pode ter a chance de quando vc esta escrevendo e fechar o arquivo antes de terminar
+isso faz com que tudo seja eviado para aquivo
+
+try(FileWriter writer = new FileWriter(file,true);) {-> recurso do try de tudo que close, ele fecha automaticamente
+            file.createNewFile();
+            writer.write("OIE AQUI RAFAEL");
+            writer.flush();
+        }
+
+
+LER AQUIVOS
+
+FileReader reader = new FileReader(file);-> DA MESMA FORMA QUE WRITE NO TRY ELE FECHA AUTOMATICAMENTE
+RETORNO DELE DE INT, MAS VC PODE FALAR QUE ELE CHAR E TRASFORMA EM LETRA
+
+System.out.println((char) reader.read());-> AQUI SO VAI LER PRIMEIRA LETRA RETORNA
+
+
+ char[] chars = new char[30];
+            reader.read(chars);
+            for (char c: chars){
+                System.out.print(c);
+}-> AQUI RETORNA AS 30 PRIMEIRA LETRA
+
+COMO SABEMOS QUE NO FINAL QUANDO ELE TERMINA A LINHA ELE RETORNA -1
+int reads;
+while ((reads = reader.read())!=-1){
+System.out.print((char) reads);
+}-> AQUI RETORNA TUDO ATE FINAL
+MEIO QUE PEGA INT READS FALA QUE  ELE UMA LETRA E COMPRA SE NUMERO -1 OU NÃO
+SE NÃO VAI PARA SYSTEM E MOSTRA
+
+
+
+BufferedWriter-> escrita dinamica, são praticamente mesma coisas, mas ela tem mais agilidade que fileWriter
+ele escreve na memoria, e file vai direto no disco que mais lento ele mais rapido
+
+FileWriter writer = new FileWriter(file,true);-> aqui para toda vez que vc renciar não precisar apagar tudo
+            BufferedWriter bufferedWriter = new BufferedWriter(writer)) {
+            bufferedWriter.write("OIE AQUI RAFAEL");
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
+
+Mesma coisa que fileWrite, so que tem metodo newLine -> que pula linha
+
+
+BufferedReader
+ System.out.println(bufferedReader.readLine());-> mesma coisa que FileReader
+ diferença que ele ler em linha não em letras
+ String reade ;
+             while ((reade = bufferedReader.readLine())!=null){-> ele retorna null quando acabou as linha
+                 System.out.println(reade);
+             }-> para ler todas linha
+
+mesma coisa diferença que ele ler mais rapido tem mais agilidade
+
+ bufferedReader.lines();->retorna um Stream de elementos que são linhas lidas deste BufferedReader
+bufferedReader.markSupported();
+bufferedReader.reset();
+bufferedReader.mark(5);
+Quando você chama mark()um, BufferedReaderele começará a manter os dados lidos daquele ponto
+em diante em seu buffer interno. Quando você chamar, reset()ele voltará para a posição
+marcada do fluxo
+
+
+bufferedReader.ready();
+preparar. Informa se este fluxo está pronto para ser lido . Um fluxo de caracteres em buffer
+estará pronto se o buffer não estiver vazio ou se o fluxo de caracteres subjacente estiver pronto.
+
+
+CRIAR DIRETORIO
+File file = new File("DIRETORIO");
+file.mkdir();
+
+CRIAR ARQUIVO DENTRO DESTE DIRETORIO
+
+File file2 = new File(file,"FILE.txt");-> vc tem duas opção vc dizer caminho absoluto ou fazer referencia
+fileDiretorio igual eu fiz e cria arquivo
+file2.createNewFile();
+RENOMEAR AQUIVO
+
+ file2.renameTo(new File(file,"renomeado.txt"));->aqui vc pega file quer renomear
+ passa file novo com nome que vc quer, e se vc ainda quer ele no diretorio tem passar diretorio novamente
+
+
+
+NIO-> começo -> Path -> Paths -> Files-> são modelos que herda outro, assim  criando path
+
+COMO PEGAR ARQUIVO COM PATH
+Path path = Paths.get("files.txt");
+SE PODE PEGAR PASSANDO URL DELE INTEIRA OU FILE
+Path path = Paths.get("C:\\Users\\rafae\\IdeaProjects\\JAVA\\Hello.java");
+
+CRIANDO DRETORIO
+ Path path = Paths.get("Directory");-> aqui da nome para diretorio
+        if(Files.notExists(path)){-> aqui para evitar futuros erros se diretorio ja exist não precisa criar
+            Files.createDirectory(path);-> se não existir criar
+        }
+
+SUBDIRETORIO
+ Path sub = Paths.get("Directory/subDirectory");-> PODE SER DESTE JEITO OU JA PASSANDO DIRETORIO DIRETAMENTE QUE BEM MELHOR
+        if(Files.notExists(sub)){
+            Files.createDirectories(sub);-> AQUI CRIA SUBdIRETORIOS,
+        }
+
+CRIANDO FILE
+Path file = Paths.get(sub.toString(),"file.txt");-> AONDE VC QUER CRIAR ESSE FILE EM QUAL DIRETORIO, E NOME DELE
+        if(Files.notExists(file)){
+            Files.createFile(file);
+        }
+
+CRIANDO COPIA
+ Path source = file;-> ARQUIVO DE ORIGEM
+ Path target = Paths.get(file.getParent().toString(),"filesRe.txt");-> PARA ONDE ELE DEVE IR
+ Files.copy(source,target, StandardCopyOption.REPLACE_EXISTING);-> CRIAR COPIA, COM TUDO QUE TEM NO ARQUIVO UM
+ CRIA NO ARQUIVO 2
+
+
+MODIFICANDO
+LocalDateTime dateTime = LocalDateTime.now();
+file.toFile().setLastModified(dateTime.toInstant(ZoneOffset.UTC).toEpochMilli());
+MODIFICANDO HORA QUE FOI ALTERADO
+
+AGORA COM PATH
+FileTime from = FileTime.from(dateTime.toInstant(ZoneOffset.UTC));
+Files.setLastModifiedTime(file,from);
+
+     System.out.println(Files.isWritable(file)); -> Gravavel
+        System.out.println(Files.isReadable(file)); -> Legivel
+        System.out.println(Files.isExecutable(file)); -> Executável
+Para altera escrita, leitura, etc
+  Path sub = Paths.get("Directory/subDirectory");
+        Path file = Paths.get(sub.toString(),"file.txt");
+
+        Files.setAttribute(file,"dos:hidden",true);
+        Files.setAttribute(file,"dos:readonly",true);
+        Files.setAttribute(file,"dos:hidden",false);
+        Files.setAttribute(file,"dos:readonly",false );
+        DosFileAttributes dosFileAttributes = Files.readAttributes(file,DosFileAttributes.class);
+        System.out.println(dosFileAttributes.isHidden());
+        System.out.println(dosFileAttributes.isReadOnly());
+        DosFileAttributeView view = Files.getFileAttributeView(file, DosFileAttributeView.class);
+        view.setHidden(false);
+        view.setReadOnly(false);
+maneiras de ler e altera
+   readAttributes-> so para atributos de leitrua
+   getFileAttributeView-> para modificar atributos
+   quando contem Viem -> significa que é para modificar
