@@ -1,0 +1,56 @@
+String name = "Rafael";
+        String name2 = "Rafael";
+        String name3  = new String("Rafael");
+        System.out.println(name == name2); //true
+        System.out.println(name == name3);//false
+        System.out.println(name.equals(name3));// true
+Quando nos compra valores sempre devemos compra com equals, por que exmepo da String
+primeiro deu true por que dois names, esta salvo no mesmo lugar da memoria
+o segundo mesmo sendo mesmo nome deu false por que ele esta salvo lugares da memoria diferente
+o sinal de igual não esta comprando caracteres mais se sim esta salvo no mesmo lugar na memoria
+
+
+        Person person = new Person("1234","Rafael");
+        Person person2 = new Person("1234","Rafael")
+        System.out.println(person2.equals(person));// false
+AQUI VAI DAR FALSO, POR QUE NÃO ESTA COMPARANDO AS STRINGS OU QUALQUER COISA MAIS SIM QUE ESSE EQUALS
+ESTA COMPRANDO SE ESTA NO MESMO ENDEREÇO DE MEMORIA
+MAS COMO SE FAZ PARA COMPARA OS ATRIBUTOS
+TEMOS QUE SOBRE ESCREVER O EQUALS
+
+
+ASSIM SE FAZ
+
+
+
+@Override
+    public boolean equals(Object obj) {
+        if(obj == null)return false ;
+        if(this == obj)return true ;
+        if(this.getClass() != obj.getClass())return false;
+        Person person = (Person) obj;
+        return this.cpf != null && this.cpf.equals(person.cpf);
+    }
+    Person person = new Person("1234","Rafael");
+    Person person2 = new Person("1234","Rafael")
+    System.out.println(person2.equals(person));// true
+    agora retorna true, por que sobrecrevendo equals nos compra com que nos quer
+    não so com local da memoria, mas tbm o string la dentro
+
+
+    hast
+
+     @Override
+        public int hashCode() {
+            return Objects.hash(this.cpf);
+        }
+     isso trasoforma todos carcteres em numeros, ele compara se os numero bate
+     se bater, e tiver mais de um resultado ele usa equals, isso aumenta a perfomace
+     pesquisa de lista, e facilita a pesquisa
+
+     duas forma de testar
+      @Override
+         public int hashCode() {
+             //return this.cpf == null ? 0 : this.cpf.hashCode();
+             return Objects.hash(this.cpf);
+         }
