@@ -1,0 +1,139 @@
+Antigamente, não tinha generic para programar tinha que ter monte de validação
+List list = new ArrayList();
+        list.add(54);
+        list.add("RAfael");
+        list.add(54L);
+
+        for (Object o:list){
+            if(o instanceof  String){
+                System.out.println(o);
+            }
+        }
+
+para pegar so um tipo, isso maneira extremamente errada
+-----------------------------------------------------------------------------------------------------------------------------------------
+        WildCard
+               List<Cachorro> cachorros = List.of(new Cachorro());
+                List<Gato> gato =List.of (new Gato(),new Gato());
+                printBarulho(gato);//erro
+
+
+
+            }
+            private static void printBarulho(List<Animal> animals){
+                for(Animal animal: animals){
+                    animal.barulho();
+                }
+            }
+Por que da erro, por que para java ele quer tudo certo, se vc colocou animal so aceita animal
+vc não disse que ele vai aceita outras coisas alem disso, mas tem uma forma de dizer para java aceita sem da erro
+
+
+vc basta fazer isso
+List<? extends Animal>
+mas fazendo isso vc não pode add nada a mais nesta lista
+por que vamos se dizer
+vc add uma lista de cachorro, mas se quer add outra coisa, tipo mais um cachorro ate ai blz
+mas se vc add sem querer um gato, ou animal, isso quebra o codigo,por que gato e cachorro são class
+mais especificas, e animal tbm class superior, isso pode quebra codigo usado de uma ma forma
+se torna so uma lista de leitrura,
+mas se vc quiser add uma coisa pode add essa aqui ou precisar
+
+
+
+private static void printBarulho2(List<? super Animal> animals){
+        for(Object animal: animals){
+            if(animal instanceof Animal){
+              Animal  a = (Animal) animal;
+              a.barulho();
+            }
+        }
+    }
+
+aqui vc esta dizendo para java que vc vai garantir para java, vc vai passar no parametro
+so vai add animal ou superior a ele, vc vai dar garatia para java, tudo que vc implementar
+mas para mostra coisa especifica vai te que usar Instanceof;
+
+
+
+
+
+agora vamos colocar em praticas outras coisas
+    List<Barco> barcos =new ArrayList<>(List.of(new Barco("canoa"),new Barco("lancha")));
+
+    public Barco alugar(){
+        System.out.println("Buscando barco");
+        Barco barco = barcos.remove(1);
+        System.out.println("barco Alugado "+ barco);
+        System.out.println("barco: "+ barcos);
+        return barco;
+    }
+    public void devolvendo (Barco barco){
+        System.out.println("Devolvendo barco");
+        barcos.add(barco);
+        System.out.println("barco disponivel: "+ barcos );
+    }
+
+
+      List<Carro> carros =new ArrayList<>(List.of(new Carro("BMW"),new Carro("FUSCA")));
+
+        public Carro alugar(){
+            System.out.println("Buscando Carro");
+            Carro carroALugar = carros.remove(1);
+            System.out.println("Carro Alugado "+ carroALugar);
+            System.out.println("Carros: "+ carros);
+            return carroALugar;
+        }
+        public void devolvendo (Carro carro){
+            System.out.println("Devolvendo carro");
+            carros.add(carro);
+            System.out.println("Carro disponivel: "+ carros);
+        }
+
+
+Como visto no codigos a cima tudo exatamente igual nem uma mudança, para isso vc pode usar generic que que evita essa repertção
+de codigo
+como fazer mostra a baixo
+
+
+
+
+public class Alugar<T> {
+   private  List<T> tList =new ArrayList<>();
+   public Alugar(List<T> tList){
+     this.tList = tList;
+   }
+
+    public T alugar(){
+        System.out.println("Buscando objeto");
+        T t = tList.remove(1);
+        System.out.println("objeto Alugado "+ t);
+        System.out.println("barco: "+ tList);
+        return t;
+    }
+    public void devolvendo (T t){
+        System.out.println("Devolvendo objeto");
+        tList.add(t);
+        System.out.println("barco disponivel: "+ tList );
+    }
+
+    Mesmo codigo so que com generico na class, tudo vai ser generico vc pode ultilizar isso para
+    todo tipo de alugar, independer do que seja
+
+
+
+
+
+como implementar generic em class,
+public class Alugar<T>
+Se pode add quantos tipos quiser de T tipos genericos, pode dar N valores para ele
+ou instanciar da maneira que quiser
+public class Alugar<T,E,J>
+private T t ;
+private E e ;
+private J j ;
+
+em so um metodo
+private static<T> void criarArray(T t){
+}
+dapar cria de inumeras meneira com return e com extends, ou com super
