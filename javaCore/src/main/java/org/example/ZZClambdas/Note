@@ -1,0 +1,91 @@
+@FunctionalInterface
+interface funcional, são interface que tem apenas um metodo abstract
+temos algumas regras, que tem ter (parametro)-> <expressão>, e tem retorna algumas coisa
+lambdas são anonimas, são função, onjetivo ser codigo mais cosiso
+-----------------------------Predicate----------------------------------
+ex
+filteres(cars,car -> car.getColor().equalsIgnoreCase("black")).forEach(System.out::println);
+        filter(cars, new CarPredicate<Car>() {
+            @Override
+            public boolean filter(Car car) {
+                return car.getColor().equalsIgnoreCase("green");
+            }
+        }).forEach(System.out::println);
+-------------------------------consumer-------------------------------------
+diferença desta par predicate, que essa não tem retorno
+
+ex
+ List<String> strings =  List.of("rafael","rian","renan","raul","riana","radiador");
+       forEache(strings,s -> System.out.println(s.toUpperCase()));
+    }
+    private static <T> void forEache(List<T> tList, Consumer<T> tConsumer){
+
+        for(T t: tList){
+            tConsumer.accept(t);
+        }
+    }
+pode fazer qualque coisa des que retorno do metodo final seja void, tipo system.out.print
+
+
+-------------------------------------------Function--------------------------------------------------
+DIFERENÇA DESTA, É QUE VC PODE AUTERA, TIPO QUE VC VAI RECEBER, E TIPO QUE VC VAI RETORNAR
+
+aqui chamando metodo, lista de string, intancia uma class anonima, mostra as modificação oq vai receber,
+oq vai retorna, String  como instanciado la embaixo, retonar ai vc seta, intager
+ forEache(strings, new Function<String, Integer>() {
+           @Override
+           public Integer apply(String s) {
+               return s.length();
+           }
+       });
+
+
+       forEache(strings, s -> s.length());
+
+       forEache(strings, String::length);
+
+       aqui metodo com interfece Function, com metod apply, que recebe string, retorna intager
+       private static <T,R> List<R> forEache(List<T> tList, Function<T,R> trFunction){
+               List<R> rList = new ArrayList<>();
+               for(T t: tList){
+                  rList.add( trFunction.apply(t));
+               }
+               return rList;
+           }
+------------------------------------Method Reference Static-----------------------------------------------------------
+Metodo de reference, uma classe que vc cria, com metodos statics que retorna mesma coisa que metodo de referencia dele
+e tem as mesmas funcionalidade so que melhorada, tipo compra lembrando que todos esse metodos são statics
+sort:
+Collections.sort(animes,(o1, o2) -> o1.getName().compareTo(o2.getName()));
+Simpleficados com lambdas
+Collections.sort(animes, Comparator.comparing(Anime::getName));
+com metodo criado
+Collections.sort(animes,(a1,a2)-> AnimeComparators.compareByTitle(a1,a2));
+Simpleficados com lambdas
+Collections.sort(animes, AnimeComparators::compareByTitle);
+diferença que nos pode com esse metodo criado, so precisa de um chamado para fazer comparator,
+enquanto no metodo comparator tem duas chamadas, assim fazendo que demore mais, não seja tão intuitivo
+fora que desta forma criado, pode fazer varios metodo de compração diferente, como nome id, ou numero, preço etc....
+
+---------------------------------------Method Reference No Static-----------------------------------------------------
+AnimeComparators animeComparators = new AnimeComparators();
+animes.sort(animeComparators::compareByTitleNoStatic);
+A diferença que sempre tem instanciar a class toda vez
+-------------------------------------Pelo construtor------------------------------------------------------------------
+  names.sort(String::compareTo);
+        System.out.println(names);
+        Function<String,Integer> stringIntegerFunction= String::length;
+        names.forEach(n-> System.out.println(stringIntegerFunction.apply(n)));
+--------------------------------------------------------------------------------------------------------------------
+  BiPredicate<List<String>,String> checkName= List::contains;
+  System.out.println(checkName.test(names,"rafael"));
+ -------------------------------------------------------------------------------------------
+Supplier<AnimeComparators> animeComparatorsSupplier = AnimeComparators::new;
+        AnimeComparators animeComparators = animeComparatorsSupplier.get();
+
+        animes.sort(animeComparators::compareByTitleNoStatic);
+        System.out.println(animes);
+
+        BiFunction<String,Integer,Anime> function= Anime::new;
+
+        Aqui para crias referencias, de Construtores de class vazios, para atributos, mostando mais do Bipredicate e Bifunctions
