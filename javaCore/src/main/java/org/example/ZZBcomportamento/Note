@@ -1,0 +1,29 @@
+Comportamento
+Vc pode com Class anonima, cria interface que retorna algo, de acordo com sua preferencia
+mas tem regras, que vc não pode mudar paremetros e nem nomes, mas pode fazer class gerica,
+
+ filteres(cars,car -> car.getColor().equalsIgnoreCase("black")).forEach(System.out::println);
+
+CarPredicate-> interface com um unico metodo abstract;
+com classe anonima, vc Colocando essa inreface como paramentro, vc pode fazer nova intancia
+e colocar uma class anonima  fazer retorno que quiser
+
+filter(cars, new CarPredicate<Car>() {
+            @Override
+            public boolean filter(Car car) {
+                return car.getColor().equalsIgnoreCase("green");
+            }
+        }).forEach(System.out::println);-> aqui é monto  e passando coisas, quando simples pode fazer da meneira la de cima
+        quando mais compliecado tem que abrir chaves igual aqui embaixo
+
+
+  private static<T> List<T> filteres(List<T> list,CarPredicate<T> filter){
+        List<T> listRetorn = new ArrayList<>();
+        for(T ts:list){
+            if(filter.filter(ts)){
+                listRetorn.add(ts);
+            }
+        }
+        return listRetorn;
+    }
+
