@@ -1,0 +1,58 @@
+Class alinhadas
+
+Sem ser ineterface grafica fica pouco dificil ver uma ultilidade, exemplo botao,
+tem parte cuida da interface grafica e outra parte ação, por exemplo pela coesão não faz sentido
+essa clss esta fora, então para isso tem class interna,  para esses usos especificos foi criado classes internas
+
+class interna como fosse um metodo so que bem mais poderoso
+vc pode declara atributos e tbm ele tem acesso a todo atributo e metodos da class mais exteterna
+
+
+coisa importates como faz para chamar essa class, e os metodos dela
+OuterClassesTest01 outerClassesTest01 = new OuterClassesTest01();
+        Inner inner = outerClassesTest01.new Inner();
+        primeiro vc intancia a class mais externa, depois vc pega class mais interna
+        e coloca nome da class mais externa com new Inner();
+        refercia dela, lembrando que this sempre faz referencia para ele mesmo
+        todo this que vc pegar vai ser referia a class de dentro, e se tiver metodo com mesmo nome atributo
+        vc instancia a class externa, e faz referecia com oq vc quer pegar
+
+Classes locais
+CLASSES QUE VC CRIA DENTRO DE UM METODO, COM TEMPO DE VIDA MUITO CURTO, OU SEJA A DURAÇÃO DAQUELE METODO
+
+
+ void print(){
+        class  LocalClass{
+            public void printLocal(){
+                System.out.println(name);
+            }
+        }
+        LocalClass localClass = new LocalClass();
+        localClass.printLocal();
+    }
+
+ dentro de um metodo, e para usar oq tem desta class so instanciando dentro do metodo
+
+
+ Class Anônimas
+São class que vão existir em breve momento dentro do codigo não pode ser reutlizada
+
+
+  Animals animals = new Animals(){
+            @Override
+            public void walk() {
+                System.out.println("dog");
+            }
+        };
+        animals.walk();
+
+vc da chaves na instancia da class sobre escreve metodo
+para que bom para metodos que vc precisa sobre escreve mais so na quela class que vc não iria usar mais vezes ou etc
+
+
+
+
+Classes aninhadas estáticas
+é uma class mesma coisa que classe alinha, mas diferença que nao precisa fazer referencia a a class superior
+class externa
+não para que ser, é uma class por questão empacotamneto não tinha nessecidade de ser criado fora desta class
