@@ -1,0 +1,29 @@
+Oq é optional, ele tem intuito de envitar null pontier excption, ele tem com objeitvo que esse tipo de erro não ocorra
+e indicar que retorno de um metodo não pode vim, dependendo da situação
+Ex: tipos de retorno optional
+ Optional<String> o1 = Optional.ofNullable(findByName("cabeça"));
+ ofNullable-> avisando que pode retorna null
+ of-> que não aceita retorno null,
+ Optional.empty()-> vazio
+--------------------------------------------------------------------------------------------------------------------
+ifPresent(s-> System.out.println(s.toUpperCase()));-> se tiver presente exculta uma ação
+o1.orElse("Vazio")-> se tiver vazio exculta tal ação
+o1.orElseThrow(RuntimeException::new); -> se tiver vazio exculte erro
+o1.orElseThrow(IllegalArgumentException::new);-> diferentes tipos de exceptions
+o1.orElseThrow(() -> new RuntimeException("nome não encontrado"));-> pode ate fazer com mensagem de erro
+A diferença é que nesse caso o método é chamado e seu retorno é passado para orElse. Já se eu chamar orElseGet,
+o método só é chamado se o Optional não tiver um valor:
+ex:
+System.out.println(opt.orElseGet(() -> {
+    // faz outras coisas complexas aqui
+    return resultadoDasCoisasComplexasAcima;
+}));
+Isso faz diferença nos casos em que o método a ser chamado é muito custoso (faz operações complexas, demoradas,
+gasta muito processamento ou memória, o objeto retornado é "muito grande", etc). Nesses casos, usar orElseGet é
+uma opção melhor que orElse, pois aí o método só é chamado quando realmente necessário.
+
+ifPresentOrElse-> se tiver presente exculta uma ação se não exculta outra coisa
+o1.ifPresentOrElse(s-> System.out.println(s.toUpperCase()),RuntimeException::new);
+o1.ifPresentOrElse(s-> System.out.println(s.toUpperCase()),() -> System.out.println("vazio"));
+o1.ifPresentOrElse(s-> System.out.println(s.toUpperCase()),() -> System.out.println(findByName("cabeça")));
+
