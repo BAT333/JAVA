@@ -1,0 +1,115 @@
+Strem-> Strem é uma sequencia de elementos, nos estamos trabalhando com sequencia e não guardando nada
+em quanto List-> nos estamos trabalhando com espaço por que estamos trabalhando e guardado infos
+
+Esse codigo sem strem
+ List<Anime> anime = new ArrayList<>();
+
+        animes.sort(Comparator.comparing(Anime::getName));
+        for (int i =0;i< animes.size();i++){
+            if(animes.get(i).getQuantity()<4){
+                anime.add(animes.get(i));
+                if(i>=3){
+                    break;
+                }
+            }
+        }
+        System.out.println(anime);
+
+
+ ESSE CODIGO COM STREM
+  animes.stream().
+                 sorted(Comparator.comparing(Anime::getName)).
+                 filter(a->a.getQuantity()<4)
+                 .limit(3).
+                 forEach(System.out::println);
+  Como usar maioria das coleção tem strem, que traforma uma lista em stem
+  intermediaria-> que resulta em outro strem
+  sorted-> arruma arruma e faz ordenção dele
+  filter filtra tudo, pode ter N filters
+  limit limita
+  final -> que finaliza strem
+  .map(Anime::getName)-> o map, pega anime e trasforma lista de outra coisa
+  .count -> para contar quantos tem
+  .distinc -> para distinguir um diferente do outro, mas esse tem que ter, equals, hast code
+  forEach final, exculta o final de acorodo com oq vc fez no strem, ele tem retorno void
+
+  Long aLong =  animes.stream().
+                  sorted(Comparator.comparing(Anime::getName)).
+                  filter(a->a.getQuantity()<4)
+                  .limit(3)
+                  .map(Anime::getName)
+                  .count();
+
+FlatMap, é um  lista dentro de uma lista, quando vc tem monte de lista dentro de uma lista isso faz com que tira lista
+dentro da outra lista
+List<List<String>> lists = new ArrayList<>();
+        lists.add(names);
+        lists.add(names);
+        lists.add(names);
+
+        lists.stream().flatMap(Collection::stream).collect(Collectors.toList()).forEach(System.out::println);
+
+
+
+anyMatch = se tem algo na sua lista que combina anyMatch(lista ->lista.preco>4)
+allMatch = se tudo na sua lista esta de uma fora que vc deseja allMatch(lista -> lista.preco>5) tudo na sua lista esta maior que
+5
+nonoMarch = ele retorna true se for contrario, tipo nem um deles menor que zero, true. nonoMatch(lista -> lista.preco>5) aqui retornaria false
+names.strem().filter(ls-> ln.preco >5 ).findAny() -> ira retorna qualque quer um que for maior que 5, um unico resultado
+retorna optional
+findFirst()-> sempre retornara o primeiro da lista
+max()-> pega o preço maximo com comparador max(Comparator.comparing(Anim::preco));
+Finding and Matching
+
+Reduce-> Apartir de um unica List retorna resultado unico
+ number.stream().reduce((n1, n2) -> n1+n2 );
+        System.out.println(number.stream().reduce(Integer::sum));
+        System.out.println(number.stream().reduce(Integer::min));
+        System.out.println(number.stream().reduce(Integer::max));
+        System.out.println(number.stream().reduce((n1, n2) -> n1-n2));
+        System.out.println(number.stream().reduce((n1, n2) -> n1*n2));
+
+        mapToDouble -> esse converte todos em Double tipo class, em um lugar que precisa de Alta performace fica melhor
+        e ja tem nele os tipo sum, etc
+
+
+
+Gerando streams->
+IntStream.rangeClosed(1,50).filter(n -> n%2==0).forEach(System.out::println);
+        IntStream.range(1,50).filter(n -> n%2==0).forEach(System.out::println);
+
+        int num[] = {1,12,4,8};
+        System.out.println(Arrays.stream(num));
+
+
+        try {
+           Files.lines(Paths.get("text")).filter(l-> l.contains("java")).forEach(System.out::println);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }finally {
+
+        }
+
+        para cria strem infinito
+        Stream.iterate(1,n-> n+1).forEach(System.out::println);
+
+
+
+
+
+
+Summarizing
+System.out.println(animes.stream().collect(Collectors.summarizingDouble(Anime::getQuantity)) );
+Joining -> aqui ajunta todas string e pode coloca demilitador
+Grouping- > para agrupar em uma unica coisa
+Anime.strem().collect(Collectors.grupingby(Anime::gatCatrgory));
+System.out.println( animes.stream().collect(Collectors.groupingBy(Anime::getCategory)));
+
+Sempre precisa add na class
+System.out.println( animes.stream().collect(Collectors.groupingBy(anime -> anime.getQuantity()>7? Promotion.YES: Promotion.NO)));
+
+        System.out.println( animes.stream().collect(Collectors.groupingBy(Anime::getCategory)));
+
+        System.out.println( animes.stream().collect(Collectors.groupingBy(anime -> anime.getQuantity()>7? Promotion.YES: Promotion.NO)));
+        System.out.println( animes.stream().collect(Collectors.groupingBy(anime -> anime.getQuantity()>7? Promotion.YES: Promotion.NO,Collectors.groupingBy(Anime::getCategory))));
+        System.out.println( animes.stream().collect(Collectors.groupingBy(Anime::getCategory,Collectors.mapping(anime -> anime.getQuantity()>7? Promotion.YES: Promotion.NO,Collectors.toSet()))));

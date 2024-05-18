@@ -1,8 +1,5 @@
 package org.example.ZZClambdas.test;
 
-import org.example.ZZClambdas.dominio.Anime;
-import org.example.ZZClambdas.service.AnimeComparators;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiPredicate;

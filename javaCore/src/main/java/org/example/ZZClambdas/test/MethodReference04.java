@@ -4,12 +4,8 @@ import org.example.ZZClambdas.dominio.Anime;
 import org.example.ZZClambdas.service.AnimeComparators;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.function.BiFunction;
-import java.util.function.BiPredicate;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class MethodReference04 {

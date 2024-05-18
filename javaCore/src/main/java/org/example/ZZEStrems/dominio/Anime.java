@@ -1,14 +1,18 @@
-package org.example.ZZClambdas.dominio;
-
-import java.util.Objects;
+package org.example.ZZEStrems.dominio;
 
 public class Anime {
     private String name;
     private int quantity;
+    private Category category;
 
     public Anime(String name, int quantity) {
         this.name = name;
         this.quantity = quantity;
+    }
+    public Anime(String name, int quantity,Category category) {
+        this.name = name;
+        this.quantity = quantity;
+        this.category = category;
     }
 
     public String getName() {
@@ -19,17 +23,8 @@ public class Anime {
         return quantity;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Anime anime = (Anime) o;
-        return quantity == anime.quantity;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash( quantity);
+    public Category getCategory() {
+        return category;
     }
 
     @Override
