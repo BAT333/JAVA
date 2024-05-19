@@ -1,0 +1,152 @@
+Thread (linha de execução) é uma sequência de instruções que faz parte de um processo principal.
+Um software é organizado em processos. Cada processo é dividido em threads, que formam tarefas independentes,
+mas relacionadas entre si. CPUs podem realizar multithreading simultâneo (SMT) para ter mais desempenho.
+
+Thread java, tem duas definição, Pode ser uma class, por que tem no java, ou um processo linha de exculção
+
+Jvm que controla, normalmente vc pode dar indicação
+
+quando vc usa, normalmente te processador
+ tem quantidade numero logico
+ quantidade de numeros logicos que vc numero de thread vc pode usar
+
+ no java tem dois tipos de thread tipo
+ Daemon -> aqui não tem tanta prioridade
+ user -> java so termina o porgrama quando todas thread user termina
+System.out.println(Thread.currentThread().getName()); -> toda thread tem nome, thread que exculta java
+é main, pega thread
+formas de criar um thread, tem forma de extends, que não recomendado por que vc esta expecilizando class
+
+class ThreadExample extends Thread{
+    private char c;
+    public ThreadExample(char c){
+        this.c = c;
+    }
+
+    @Override
+    public void run() {
+  System.out.println(Thread.currentThread().getName());
+        for (int i= 0; i<1000;i++){
+            System.out.println(c);
+            if (i%100==0) System.out.println();
+        }
+    }
+}
+  public void run() { -> oq vc quiser que essa thread faça vc precisa colocar dentro deste run
+  ThreadExample threadExample5 = new ThreadExample('k');
+          t.run();
+  Vc ainda não esta excultando thread  diferente
+  quando vc esta usando uma run se esta usando sou uma class para trabalha em thread
+  bom usar metodo start vc esta avisando para a jvm começar nova thread se repara bem so vai aparecer main
+  mas agora com stat  vai fazer latras ficar tudo embaralhada
+  começa  Thread-0 depois a Thread-1 por ai em diante
+  se vc fazer deste jeito fica meio aleatorio
+  jvm que escolhe quando vai inciar como vai iniciar
+  para se ver, nem termina primeiro programa ainda ela ja inicia outra
+  como resolver isso ????
+  por que fica tão aleatorio por que jvm fala que hora que inicia hora que para de iniciar
+  quando volta a continuar
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+outra forma de trabalha com thread, que maneira correta e faz mais sentido
+implementando a class runnable, que uma class run, ja força implementar metodo
+run
+
+
+
+---------------------------------------------Estados das threads---------------------------------------------------------------------------------
+Primeiro quando vc dar um star em thread não pode dar star de novo se não da erro
+new -> nova thread
+runnable qunado vc inicia
+running -> que ela esta excultando depois pode ir para runnable ou ir para de novo
+waiting/blocked-> pode ser bloqueada ou coloda para domir
+depois pode ir para runnable,
+por fim a dead quando thread acaba e morre
+--------------------------------------------------Prioridade e Sleep----------------------------------------------------------------------------------------------
+AQUI, NOS DAMOS PRIORIDADE PARA UMA THREAD  ASSIM ELA SENDO EXCULTADA PRIMEIRO QUE AS OUTRAS? NÃO
+TEM GARANTIA QUE ELA VAI SER TERMINADA OU EXCULTADA ANTES DAS OUTRAS POREM ELA PODE TER PEQUENA MAIOR PRIORIDADE
+ASSIM SENDO EXCULTADA EM SEQUENCIA MAIS VEZES
+SLEEP VAMOS FALAR QUE VC TEM UMA UM IMPLEMENTAÇÃO NO BANCO DE DADOS QUE VC PRECISA, PESQUISAR NELE, A CADA EXTANTE
+MAS VAMOS DIZER QUE VC NÃO QUER PESQUISAR NELE TODO MOMENTO, ENTÃO VC PODE COLOCAR ESSA THREAD PARA DORMIR
+
+ Thread.sleep(2000);-> metodo static que ela mesmo vai decidir dormir,
+ uma das pouca coisa vc pode decidir quanto tempo ela vai dormir
+
+ @Override
+     public void run() {
+         System.out.println(Thread.currentThread().getName());
+         for (int i= 0; i<1000;i++){
+             System.out.print(c);
+             if (i%100==0) System.out.println();
+         }
+         try {
+             Thread.sleep(2000);
+         } catch (InterruptedException e) {
+             throw new RuntimeException(e);
+         }
+     }
+se não tem garantia que ela vai chegar a linha do sleep, ele pode excultar linha um e 2, depois para etc
+então não tem total garantia
+
+ela depois entra nesse modo, ela vai para modo run, depois running
+
+Thread t = new Thread(new ThreadExampleRunnable('A'),"NUMERO1");-> AQUI VC DA NOME PARA SUA THREAD
+
+
+
+--------------------------------------------Yield e Join----------------------------------------------
+Yield->É UM METODO FOI CRIADO PARA A THREAD EM FUNCIONAMENTO DAR UMA PAUSA DA FAÇA A THREAD VOLTA PARA
+RUNNABLE MEIO QUE VC FALANDO PARA DAR VEZ PARA OUTRA THREAD FUNCIONAR É UMA PENAS UMA DICA, MAS NÃO TEM GARANTIA QUE
+VAI FUNCIONAR
+
+
+
+
+
+Join -> Basicamente o join faz  se dar prioridade, dele ser excultado primeiro
+tipo vc falando main e jvm, precisamos que essa thread temine primeiro para depois as outras
+serem excultada join faz isso deixa as thread primeiro terminar para as outras serem excultada
+desta forma o sleep-> tem chance de ser escultado
+
+
+
+
+
+
+VC PODE CRIAR UMA CLASS DRIRETAMENTE, COM PROGRMAÇÃO FUNCIONAL DESTE JEITO
+ Runnable runnable = ()-> {
+
+        };
+        new Thread(runnable);
+
+        OU
+        new Thread(() -> {});
+
+
+------------------------------------------------------- Sincronismo-------------------------------------------------------------
+synchronized -> vc coloca isso no metodo que vai ser acessado pela a tread, vc vai ter a garatia que so um thread
+ta acessando ele por vez, e metodo e a tread que começou primeiro vai ser a que vai terminar
+tem desta forma :
+private synchronized void withDrawal(int amount){
+ou fazendo bloco de inicialização
+
+synchronized(account){-> porem , aqui é class que vai ser acessada, essa class tem ser definida como final
+passar logica de negocio
+}
+tem tomar cuidado quando se vai trabalhar com threadsafe, por que não adianta nada se objeto se ta trabalhando é sicronizado
+e seu não é se tiver, um objeto a cima, tbm tem que ser synchronized;
+
+______________________________________________________Deadlock_______________________________________________________
+Vamos que tem a thread a e b, vamo supor que a ta segurando uma thread a ta segurando a e b segurando b
+mas vamos supor que a precisa acessar o b porem b ta sendo segurado  ai da esse deadlock não da para fazer nada so
+---------------------------------------------Sincronismo de thread pt 05 - Wait, notify e notifyAll----------------------------------------------------------
+Esse são metados usados para usar mutiplas threads
+Wait-> coloca uma thread em modo de espera ate ser notificada para funcionar de novo
+obs: tem que ter tratamente de erros, tem que esta em synchronized para chamar wait
+
+notify
+
+notifyAll
