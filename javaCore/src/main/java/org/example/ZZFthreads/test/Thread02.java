@@ -1,4 +1,4 @@
-package org.example.ZZFthreads;
+package org.example.ZZFthreads.test;
 class ThreadExampleRunnable2 implements Runnable{
     private String c;
     public ThreadExampleRunnable2(String c){

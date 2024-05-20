@@ -136,7 +136,7 @@ quando foi a ultima segunda feita
 
 
 pega primeiro e ultimo dia do mes, tem muitas class ultilitarias
-  date = date.with(TemporalAdjusters.lastDayOfMonth());
+  date = date.with(TemporalAdjusters.lastDayOfMoth());
   System.out.println(date);
 primeiro dia do proximo ano etc
 

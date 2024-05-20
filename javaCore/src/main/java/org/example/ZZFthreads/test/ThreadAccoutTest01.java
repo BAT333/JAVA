@@ -1,4 +1,4 @@
-package org.example.ZZFthreads;
+package org.example.ZZFthreads.test;
 
 import org.example.ZZFthreads.Dominio.Account;
 
