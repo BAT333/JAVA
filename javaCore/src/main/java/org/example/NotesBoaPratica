@@ -1,0 +1,85 @@
+Boas praticas padrão SOLID
+Os princípios SOLID, representados por um acrônimo que engloba cinco diretrizes fundamentais da programação
+orientada a objetos (POO), constituem um conjunto essencial de diretrizes para o desenvolvimento de software
+robusto e de fácil manutenção. Criados por Michael Feathers e introduzidos por Robert C
+
+SOLID é um acrônimo para cada um dos cinco princípios que fazem parte desse grupo: Single Responsability
+Principle (Princípio da Responsabilidade Única); Open/Closed Principle (Princípio do “Aberto para Extensão/Fechado
+para Implementação); Liskov Substitution Principle (Princípio da Substituição de Liskov);
+
+
+SOLID é um dos conjuntos mais populares de princípios de desenvolvimento de software orientado a objetos (OOD) e
+design de código. O conceito estabelece uma série de práticas que ajudam a escrever um código flexível, escalável,
+sustentável e reutilizável, facilitando a evolução e a manutenção dos programas
+
+Aprendemos que o S do acrônimo SOLID significa Single Responsability Principle, em português, princípio da
+responsabilidade única, ou seja, uma classe deve ter um, e somente um, motivo para mudar;
+
+Separamos nosso código em classes para que ficassem coesas e com apenas uma responsabilidade;
+
+Criamos classes de configurações para reaproveitá-las nas classes de serviço, evitando assim código duplicado
+
+S — Single Responsibility Principle (Princípio da responsabilidade única)
+O — Open-Closed Principle (Princípio Aberto-Fechado)
+L — Liskov Substitution Principle (Princípio da substituição de Liskov)
+I — Interface Segregation Principle (Princípio da Segregação da Interface)
+D — Dependency Inversion Principle (Princípio da inversão da dependência)
+
+
+Jeunit
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+Separação de responsabilidade
+BOA PRATICA EM API REST
+CONTROLLER
+Bom sempre na class controller não pode ter nem uma regra de negocio, class de controle para sempre esta so par achamar
+e excultar ação
+cria novo pacote service, @Service
+Quando tem erro de validação retorne sempre exception, erro de qualquer coisa
+pode trata no controller,
+
+Codigo com muita repetição, exemplo enviar email
+pode criar outra class service, para isso continuar com service
+
+
+
+
+
+ENTIDADE
+NÃO PRECISA TER
+COLUMS NAME, SE FOR MESMO NOME, NÃO PODE TER BINVALIDETION, jSONMANAGER, PARA CEREGAMENTO, ISSO TUDO NO
+DTO, RECORD
+Relacionamento entre entidade, tem sempre ser respeitado, e seguir as boas praticas
+--------------------------------------------------O padrãoData Transfer Object--------------------------------------------------------------------
+Vc Cria um dto, para receber dados em api rest, para se não receber diretamente da class, por que isso ma pratica
+pode criar class, ou rercod
+-------------------------------------------Validações flexiveis------------------------------------------------------------
+Cria uma interface validação, implementa eles nas class que vc precisa validar, e faz uma lista com essa interface
+e usa essa lista onde precisa com for, e cada class precisa @Componente, menos a interface, ela ja injetada automaticamnete
+pelo spring
+
+interface VALIDA{
+public validar(DTO);
+
+}
+@Componete
+class Test01 implementes VALIDA{
+public validar(DTO){
+//regra de negocio
+};
+}
+@Componete
+class Test02 implementes VALIDA{
+public validar(DTO){
+//regra de negocio
+};
+}
+Para usar
+@Autowired
+public List<VALIDA> VALIDAS;
+
+VALIDAS.FOREACH(//regra de negocio)
+
+--------------------------------------------------OTIMIZAÇÃO NA CAMADA DE PERSISTENCIA--------------------------------------------------------------
+COISAS DESNECESSARIA, NA ENTIDADE, SE NOMES NA TABELAS E COLUNA FOR MESMO DESNESESSARIO O @COLUNS
+CARREGAMENTO TOONE -> ELE PODE IMPACTAR NA PERFOMACE
+CASCADE FICA MAIS NA ANOTAÇÃO  @OneToMany
